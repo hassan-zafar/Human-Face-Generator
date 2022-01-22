@@ -67,10 +67,10 @@ class Predict(Resource):
                 encoded_string[x]=base64.b64encode(image_file.read())
 
         outputData={
-            'image1':str(encoded_string[0]),
-            'image2':str(encoded_string[1]),
-            'image3':str(encoded_string[2]),
-            'image4':str(encoded_string[3]),
+            'image0':str(encoded_string[0]),
+            'image1':str(encoded_string[1]),
+            'image2':str(encoded_string[2]),
+            'image3':str(encoded_string[3]),
 
         }
         return outputData
