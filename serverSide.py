@@ -14,6 +14,7 @@ from keras.preprocessing.image import save_img
 from numpy.core.numeric import outer
 import tensorflow as tf
 from PIL import Image
+import PIL as PIL
 from flask_restful import Resource,Api,reqparse
 app=Flask(__name__)
 api =Api(app)
@@ -47,41 +48,39 @@ def predict_image(prepared_image,i):
     print(outputfile)
     save_img(savePath+outputfile,img_to_array(output))
 
-def not_uploaded(json_data):
-    img_data=json_data['image']
-    image=base64.b64decode(str(img_data))
-    img=Image.open(io.BytesIO(image))
-    print('img type')
-    print(type(img))
-    encoded_string=[]
-    prepared_image=prepare_image(img,target=(256,256))
-    for x in range(1):
-        predict_image(prepared_image,x)
-        outputfile='output'+str(x)+'.png'
-        imageNew=Image.open(savePath+outputfile)
-        imageNew=imageNew.resize((50,50))
-        imageNew.save(savePath+'new_'+outputfile)
-        path=savePath+'new_'+outputfile
-        print(path)
-        with open(path,'rb') as image_file:
-            encoded_string.append(base64.b64encode(image_file.read()))
-
-        outputData={
-            'image0':str(encoded_string[0]),
-            # 'image1':str(encoded_string[1]),
-            # 'image2':str(encoded_string[2]),
-            # 'image3':str(encoded_string[3]),
-
-        }
-    return outputData
+    
 class Predict(Resource):
     def post(self):
         json_data=request.get_json()
+        img_data=json_data['image']
+        image=base64.b64decode(str(img_data))
+
+        img=Image.open(io.BytesIO(image))
         if(json_data['uploaded']):
-            print('asd')
-        else:
-            result=not_uploaded(json_data=json_data)
-            return result
+            img=PIL.ImageOps.invert(img)
+        print('img type')
+        print(type(img))
+        encoded_string=[]
+        prepared_image=prepare_image(img,target=(256,256))
+        for x in range(1):
+            predict_image(prepared_image,x)
+            outputfile='output'+str(x)+'.png'
+            imageNew=Image.open(savePath+outputfile)
+            imageNew=imageNew.resize((50,50))
+            imageNew.save(savePath+'new_'+outputfile)
+            path=savePath+'new_'+outputfile
+            print(path)
+            with open(path,'rb') as image_file:
+                encoded_string.append(base64.b64encode(image_file.read()))
+
+            outputData={
+                'image0':str(encoded_string[0]),
+                # 'image1':str(encoded_string[1]),
+                # 'image2':str(encoded_string[2]),
+                # 'image3':str(encoded_string[3]),
+
+            }
+        return outputData
 
         
 
