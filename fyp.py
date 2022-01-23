@@ -24,8 +24,8 @@ def predict_image():
 @app.route('/predict', methods=['GET', 'POST'])
 def process_predict():
 	body = request.files
-	body['media'].save('img.png')
-	return { 'msg': predict_image() }
+	body['image'].save('img.png')
+	return { 'image': predict_image() }
 
 
 if __name__ == '__main__':
