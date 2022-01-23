@@ -26,7 +26,7 @@ print("Eager mode: ", tf.executing_eagerly())
 print("Hub Version: ", hub.__version__)
 print("GPU is", "available" if tf.config.experimental.list_physical_devices("GPU") else "NOT AVAILABLE")
 
-model =load_model('fully_trained.h5')
+model =load_model('test50.h5')
 print('Model Loaded')
 outputfile='output.png'
 savePath='./output/'
