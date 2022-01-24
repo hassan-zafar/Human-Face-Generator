@@ -1,3 +1,6 @@
+#set FLASK_APP=serverSide.py
+#set FLASK_ENV=development
+#flask run --host=192.168.103.199
 from flask import Flask, request, jsonify, abort, session, flash, redirect, url_for, Response 
 from keras.preprocessing.image import load_img
 from tensorflow import keras
