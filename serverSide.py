@@ -82,7 +82,7 @@ class Predict(Resource):
             }
         return outputData
 
-//predict
+#predict
 api.add_resource(Predict,'/predict')
 
 if __name__=='__main__':
