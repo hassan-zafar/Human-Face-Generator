@@ -27,7 +27,7 @@ print("Eager mode: ", tf.executing_eagerly())
 print("Hub Version: ", hub.__version__)
 print("GPU is", "available" if tf.config.experimental.list_physical_devices("GPU") else "NOT AVAILABLE")
 
-model =load_model('test50.h5')
+model =load_model('test70.h5')
 print('Model Loaded')
 outputfile='output.png'
 savePath='./output/'
@@ -70,7 +70,7 @@ class Predict(Resource):
             imageNew.save(savePath+'new_'+outputfile)
             path=savePath+'new_'+outputfile
             print(path)
-            with open(path,'rb') as image_file:
+            with open(path,'rb') as image_file: 
                 encoded_string.append(base64.b64encode(image_file.read()))
 
             outputData={
@@ -82,9 +82,7 @@ class Predict(Resource):
             }
         return outputData
 
-        
-
-
+//predict
 api.add_resource(Predict,'/predict')
 
 if __name__=='__main__':
